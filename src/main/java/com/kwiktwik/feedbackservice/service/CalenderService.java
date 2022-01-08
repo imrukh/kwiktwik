@@ -11,7 +11,7 @@ public class CalenderService {
     private CalenderRepo calenderRepo;
 
     public String addSlot(UserSlot slot) throws Exception {
-        calenderRepo.save(slot)
+        calenderRepo.save(slot);
         return slot.getId();
     }
 }
