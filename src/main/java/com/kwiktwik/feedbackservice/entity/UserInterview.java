@@ -10,17 +10,20 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "UserSlot")
-public class UserSlot implements Serializable {
+@Document(collection = "UserInterview")
+public class UserInterview implements Serializable {
     @Id
     private String id;
+    private String cmpId;
     private String userId;
-    private ArrayList<Slot> slots;
+    private Slot slot;
+    private String candidateEmail;
+    private String role;
+    private String round;
 }

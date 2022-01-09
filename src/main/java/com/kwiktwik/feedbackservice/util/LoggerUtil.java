@@ -56,7 +56,7 @@ public class LoggerUtil {
 
     private void addMetaData(JSONObject data, String level, LoggingAction.Type loggingActionType) {
         try {
-            data.put("application", "BUSINESS_PROFILE_SERVICE");
+            data.put("application", "KwikTwik");
             data.put("level", level);
             data.put("loggingAction", loggingActionType.name());
             data.put("uIdentifier", MDC.get("uIdentifier"));

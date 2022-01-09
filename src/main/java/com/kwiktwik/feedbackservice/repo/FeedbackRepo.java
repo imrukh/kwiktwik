@@ -7,5 +7,5 @@ import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface FeedbackRepo extends MongoRepository<Feedback, String> {
-    List<Feedback> findByTitleContaining(String title);
+//    List<Feedback> findByTitleContaining(String title);
 }

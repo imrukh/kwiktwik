@@ -1,9 +1,11 @@
 package com.kwiktwik.feedbackservice.controllers;
 
+import com.kwiktwik.feedbackservice.entity.UserInterview;
 import com.kwiktwik.feedbackservice.entity.UserSlot;
 import com.kwiktwik.feedbackservice.response.BaseMessageResponse;
 import com.kwiktwik.feedbackservice.response.ServiceResponse;
 import com.kwiktwik.feedbackservice.service.CalenderService;
+import com.kwiktwik.feedbackservice.service.UserInterviewService;
 import com.kwiktwik.feedbackservice.util.Logger;
 import com.kwiktwik.feedbackservice.util.LoggerUtil;
 import com.kwiktwik.feedbackservice.util.LoggingAction;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.kwiktwik.feedbackservice.util.LoggingAction.Status.SUCCESS;
@@ -24,6 +27,9 @@ public class FeedbackController {
 
     @Autowired
     private CalenderService calenderService;
+
+    @Autowired
+    private UserInterviewService userInterviewService;
 
     @PostMapping(value = "add")
     public ServiceResponse<?> createRecord(@RequestBody UserSlot slots) {
@@ -67,6 +73,134 @@ public class FeedbackController {
             return new ServiceResponse<>(
                     new BaseMessageResponse(
                             false, "Failed to create order"),
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+    @GetMapping(value = "active")
+    public ServiceResponse<?> getSlots(@RequestParam String userId) {
+        String logId = LoggerUtil.generateLogID();
+        long startTime = System.currentTimeMillis();
+        try {
+            UserSlot res = calenderService.getUserSlots(userId);
+
+            logger.logCommonApiResponse(
+                    LoggingAction.Controller.TransactionController,
+                    LoggingAction.Method.createRecord,
+                    userId,
+                    logId,
+                    null,
+                    System.currentTimeMillis() - startTime,
+                    null,
+                    res,
+                    SUCCESS,
+                    LoggingAction.Type.CONTROLLER
+            );
+
+            return new ServiceResponse<>(res);
+        } catch (Exception e) {
+            logger.logCommonApiResponse(
+                    LoggingAction.Controller.TransactionController,
+                    LoggingAction.Method.createRecord,
+                    userId,
+                    logId,
+                    null,
+                    System.currentTimeMillis() - startTime,
+                    e.getMessage(),
+                    false,
+                    LoggingAction.Status.EXCEPTION,
+                    LoggingAction.Type.CONTROLLER
+            );
+
+            return new ServiceResponse<>(
+                    new BaseMessageResponse(
+                            false, "Failed to create order"),
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
+    @PostMapping(value = "/interview")
+    public ServiceResponse<?> addInterviewSlot(@RequestBody UserInterview interviewSlot) {
+        String logId = LoggerUtil.generateLogID();
+        long startTime = System.currentTimeMillis();
+        try {
+            String res = userInterviewService.saveInterviewSlot(interviewSlot);
+
+            logger.logCommonApiResponse(
+                    LoggingAction.Controller.TransactionController,
+                    LoggingAction.Method.createRecord,
+                    interviewSlot,
+                    logId,
+                    null,
+                    System.currentTimeMillis() - startTime,
+                    null,
+                    res,
+                    SUCCESS,
+                    LoggingAction.Type.CONTROLLER
+            );
+
+            return new ServiceResponse<>(res);
+        } catch (Exception e) {
+            logger.logCommonApiResponse(
+                    LoggingAction.Controller.TransactionController,
+                    LoggingAction.Method.createRecord,
+                    interviewSlot,
+                    logId,
+                    null,
+                    System.currentTimeMillis() - startTime,
+                    e.getMessage(),
+                    false,
+                    LoggingAction.Status.EXCEPTION,
+                    LoggingAction.Type.CONTROLLER
+            );
+
+            return new ServiceResponse<>(
+                    new BaseMessageResponse(
+                            false, "Failed to process the req."),
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
+    @GetMapping(value = "/interview")
+    public ServiceResponse<?> getInterviewSlot(@RequestParam String userId) {
+        String logId = LoggerUtil.generateLogID();
+        long startTime = System.currentTimeMillis();
+        try {
+            ArrayList<UserInterview> res = userInterviewService.getAllInterviewsByUserId(userId);
+
+            logger.logCommonApiResponse(
+                    LoggingAction.Controller.TransactionController,
+                    LoggingAction.Method.createRecord,
+                    userId,
+                    logId,
+                    null,
+                    System.currentTimeMillis() - startTime,
+                    null,
+                    res,
+                    SUCCESS,
+                    LoggingAction.Type.CONTROLLER
+            );
+
+            return new ServiceResponse<>(res);
+        } catch (Exception e) {
+            logger.logCommonApiResponse(
+                    LoggingAction.Controller.TransactionController,
+                    LoggingAction.Method.createRecord,
+                    userId,
+                    logId,
+                    null,
+                    System.currentTimeMillis() - startTime,
+                    e.getMessage(),
+                    false,
+                    LoggingAction.Status.EXCEPTION,
+                    LoggingAction.Type.CONTROLLER
+            );
+
+            return new ServiceResponse<>(
+                    new BaseMessageResponse(
+                            false, "Failed to process the req."),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
