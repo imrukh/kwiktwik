@@ -26,4 +26,5 @@ public class UserInterview implements Serializable {
     private String candidateEmail;
     private String role;
     private String round;
+    private String status;
 }
