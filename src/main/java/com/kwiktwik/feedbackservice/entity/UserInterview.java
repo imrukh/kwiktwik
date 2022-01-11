@@ -24,6 +24,7 @@ public class UserInterview implements Serializable {
     private String userId;
     private Slot slot;
     private String candidateEmail;
+    private String candidatePhone;
     private String role;
     private String round;
     private String status;
