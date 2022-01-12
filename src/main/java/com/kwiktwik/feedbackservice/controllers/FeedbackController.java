@@ -10,6 +10,7 @@ import com.kwiktwik.feedbackservice.service.UserInterviewService;
 import com.kwiktwik.feedbackservice.util.Logger;
 import com.kwiktwik.feedbackservice.util.LoggerUtil;
 import com.kwiktwik.feedbackservice.util.LoggingAction;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -169,17 +170,22 @@ public class FeedbackController {
     }
 
     @GetMapping(value = "/interview")
-    public ServiceResponse<?> getInterviewSlot(@RequestParam String userId, @RequestParam String history) {
+    public ServiceResponse<?> getInterviewSlot(@RequestHeader String tokenId, @RequestParam(defaultValue = "n") String history) {
         String logId = LoggerUtil.generateLogID();
         long startTime = System.currentTimeMillis();
         try {
-            String userEmail = firebase.getUserEmail(userId);
+            if(StringUtils.isBlank(tokenId)){
+                throw new Exception("Empty tokenId");
+            }
+
+            String userEmail = firebase.getUserEmail(tokenId);
+            System.out.println(userEmail);
             List<UserInterview> res = userInterviewService.getAllInterviewsByUserId(userEmail, history);
 
             logger.logCommonApiResponse(
                     LoggingAction.Controller.TransactionController,
                     LoggingAction.Method.createRecord,
-                    userId,
+                    tokenId,
                     logId,
                     null,
                     System.currentTimeMillis() - startTime,
@@ -194,7 +200,7 @@ public class FeedbackController {
             logger.logCommonApiResponse(
                     LoggingAction.Controller.TransactionController,
                     LoggingAction.Method.createRecord,
-                    userId,
+                    tokenId,
                     logId,
                     null,
                     System.currentTimeMillis() - startTime,
