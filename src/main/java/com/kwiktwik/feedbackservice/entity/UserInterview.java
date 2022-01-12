@@ -28,4 +28,6 @@ public class UserInterview implements Serializable {
     private String role;
     private String round;
     private String status;
+    private String comments;
+    private String cvLink;
 }

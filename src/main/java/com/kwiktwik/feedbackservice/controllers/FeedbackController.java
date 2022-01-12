@@ -1,5 +1,6 @@
 package com.kwiktwik.feedbackservice.controllers;
 
+import com.kwiktwik.feedbackservice.config.GoogleFirebase;
 import com.kwiktwik.feedbackservice.entity.UserInterview;
 import com.kwiktwik.feedbackservice.entity.UserSlot;
 import com.kwiktwik.feedbackservice.response.BaseMessageResponse;
@@ -15,11 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.kwiktwik.feedbackservice.util.LoggingAction.Status.SUCCESS;
 
 @RestController
-@RequestMapping(value = "slot/")
+@RequestMapping(value = "api/slot/")
 public class FeedbackController {
 
     @Autowired
@@ -30,6 +32,9 @@ public class FeedbackController {
 
     @Autowired
     private UserInterviewService userInterviewService;
+
+    @Autowired
+    private GoogleFirebase firebase;
 
     @PostMapping(value = "add")
     public ServiceResponse<?> createRecord(@RequestBody UserSlot slots) {
@@ -164,11 +169,12 @@ public class FeedbackController {
     }
 
     @GetMapping(value = "/interview")
-    public ServiceResponse<?> getInterviewSlot(@RequestParam String userId) {
+    public ServiceResponse<?> getInterviewSlot(@RequestParam String userId, @RequestParam String history) {
         String logId = LoggerUtil.generateLogID();
         long startTime = System.currentTimeMillis();
         try {
-            ArrayList<UserInterview> res = userInterviewService.getAllInterviewsByUserId(userId);
+            String userEmail = firebase.getUserEmail(userId);
+            List<UserInterview> res = userInterviewService.getAllInterviewsByUserId(userEmail, history);
 
             logger.logCommonApiResponse(
                     LoggingAction.Controller.TransactionController,
