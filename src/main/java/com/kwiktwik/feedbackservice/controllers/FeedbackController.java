@@ -178,7 +178,7 @@ public class FeedbackController {
                 throw new Exception("Empty tokenId");
             }
 
-            String userEmail = firebase.getUserEmail(tokenId);
+            String userEmail = firebase.getUserEmailFromAuth(tokenId);
             System.out.println(userEmail);
             List<UserInterview> res = userInterviewService.getAllInterviewsByUserId(userEmail, history);
 

@@ -4,6 +4,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,13 +53,23 @@ public class GoogleFirebase {
         System.out.println("Successfully fetched user data: " + userRecord.getEmail());
     }
 
+    public String getUserEmailFromAuth(String authToken) {
+        try {
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(authToken);
+            String uid = decodedToken.getUid();
+            return getUserEmail(uid);
+        } catch (Exception e) {
+            logger.info("getUserEmailFromAuth: Exception while fetching userInfo: authToken: {}, e: {}", authToken, e.getMessage());
+        }
+        return "";
+    }
+
     public String getUserEmail(String uid) {
         String email = "";
         try {
             UserRecord userRecord = FirebaseAuth.getInstance().getUser(uid);
             email = userRecord.getEmail();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.info("getUserEmail: Exception while fetching userInfo: uid: {}, e: {}", uid, e.getMessage());
         }
 
