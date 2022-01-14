@@ -170,22 +170,22 @@ public class FeedbackController {
     }
 
     @GetMapping(value = "/interview")
-    public ServiceResponse<?> getInterviewSlot(@RequestHeader String tokenId, @RequestParam(defaultValue = "n") String history) {
+    public ServiceResponse<?> getInterviewSlot(@RequestHeader String Authorization, @RequestParam(defaultValue = "n") String history) {
         String logId = LoggerUtil.generateLogID();
         long startTime = System.currentTimeMillis();
         try {
-            if(StringUtils.isBlank(tokenId)){
-                throw new Exception("Empty tokenId");
+            if(StringUtils.isBlank(Authorization)){
+                throw new Exception("Empty Authorization");
             }
 
-            String userEmail = firebase.getUserEmailFromAuth(tokenId);
+            String userEmail = firebase.getUserEmailFromAuth(Authorization);
             System.out.println(userEmail);
             List<UserInterview> res = userInterviewService.getAllInterviewsByUserId(userEmail, history);
 
             logger.logCommonApiResponse(
                     LoggingAction.Controller.TransactionController,
                     LoggingAction.Method.createRecord,
-                    tokenId,
+                    Authorization,
                     logId,
                     null,
                     System.currentTimeMillis() - startTime,
@@ -200,7 +200,7 @@ public class FeedbackController {
             logger.logCommonApiResponse(
                     LoggingAction.Controller.TransactionController,
                     LoggingAction.Method.createRecord,
-                    tokenId,
+                    Authorization,
                     logId,
                     null,
                     System.currentTimeMillis() - startTime,
