@@ -21,8 +21,9 @@ import java.util.List;
 
 import static com.kwiktwik.feedbackservice.util.LoggingAction.Status.SUCCESS;
 
+@CrossOrigin(origins = "https://api.kwiktwik.com")
 @RestController
-@RequestMapping(value = "api/slot/")
+@RequestMapping(value = "/api/slot")
 public class FeedbackController {
 
     @Autowired
@@ -169,7 +170,7 @@ public class FeedbackController {
         }
     }
 
-    @GetMapping(value = "/interview")
+    @GetMapping(value = "interview")
     public ServiceResponse<?> getInterviewSlot(@RequestHeader String Authorization, @RequestParam(defaultValue = "n") String history) {
         String logId = LoggerUtil.generateLogID();
         long startTime = System.currentTimeMillis();
