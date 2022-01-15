@@ -6,26 +6,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
-import java.util.List;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
-        corsConfiguration.setAllowedOriginPatterns(Arrays.asList("*"));
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"));
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setExposedHeaders(Arrays.asList("*"));
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"));
+    configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
+    configuration.setAllowCredentials(true);
 
         // You can customize the following part based on your project, it's only a sample
-        http.authorizeRequests().antMatchers().permitAll().anyRequest()
-                .authenticated().and().csrf().disable().cors().configurationSource(request -> corsConfiguration);
+        http.authorizeRequests().antMatchers("/**").permitAll().anyRequest()
+                .authenticated().and().csrf().disable().cors().configurationSource(request -> configuration);
 
     }
 }
