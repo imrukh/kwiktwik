@@ -15,7 +15,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.setAllowedOriginPatterns(Arrays.asList("*"));
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"));
-    configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
+    configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization",
+            "sec-ch-ua-platform",
+            "User-Agent",
+            "Referer","Content-Type", "sec-ch-ua-mobile", "sec-ch-ua"
+            ));
     configuration.setAllowCredentials(true);
 
         // You can customize the following part based on your project, it's only a sample
