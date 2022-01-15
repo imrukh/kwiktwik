@@ -21,7 +21,7 @@ import java.util.List;
 
 import static com.kwiktwik.feedbackservice.util.LoggingAction.Status.SUCCESS;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/slot")
 public class FeedbackController {
