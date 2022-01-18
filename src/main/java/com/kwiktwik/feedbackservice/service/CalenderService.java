@@ -2,10 +2,12 @@ package com.kwiktwik.feedbackservice.service;
 
 import com.kwiktwik.feedbackservice.entity.UserSlot;
 import com.kwiktwik.feedbackservice.repo.CalenderRepo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 @Service
 public class CalenderService {
@@ -14,7 +16,7 @@ public class CalenderService {
 
     public String addSlot(UserSlot slot) throws Exception {
         UserSlot userPreviousSlot = getUserSlots(slot.getUserId());
-        if (userPreviousSlot != null) {
+        if (StringUtils.isNotBlank(userPreviousSlot.getId())) {
             userPreviousSlot.setSlots(slot.getSlots());
             return userPreviousSlot.getId();
         } else {
@@ -28,6 +30,7 @@ public class CalenderService {
 //        for(UserSlot s: res){
 //            System.out.println(s.getSlots());
 //        }
+        if(res==null || res.size()==0) return new UserSlot(userId);
         return res.get(res.size() - 1);
     }
 }

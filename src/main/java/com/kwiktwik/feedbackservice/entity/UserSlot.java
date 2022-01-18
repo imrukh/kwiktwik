@@ -23,4 +23,8 @@ public class UserSlot implements Serializable {
     private String id;
     private String userId;
     private ArrayList<Slot> slots;
+    public UserSlot(String userId){
+        this.userId = userId;
+        this.slots = new ArrayList<>();
+    }
 }

@@ -81,7 +81,7 @@ public class FeedbackController {
 
             return new ServiceResponse<>(
                     new BaseMessageResponse(
-                            false, "Failed to create order"),
+                            false, "Failed to process req"),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
@@ -125,7 +125,7 @@ public class FeedbackController {
 
             return new ServiceResponse<>(
                     new BaseMessageResponse(
-                            false, "Failed to create order"),
+                            false, "Failed to process req"),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
