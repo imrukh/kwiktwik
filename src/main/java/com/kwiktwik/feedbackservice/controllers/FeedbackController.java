@@ -39,10 +39,12 @@ public class FeedbackController {
     private GoogleFirebase firebase;
 
     @PostMapping(value = "add")
-    public ServiceResponse<?> createRecord(@RequestBody UserSlot slots) {
+    public ServiceResponse<?> createRecord(@RequestHeader String Authorization, @RequestBody UserSlot slots) {
         String logId = LoggerUtil.generateLogID();
         long startTime = System.currentTimeMillis();
         try {
+            String userEmail = firebase.getUserEmailFromAuth(Authorization);
+            slots.setUserId(userEmail);
             String id = calenderService.addSlot(slots);
 
             logger.logCommonApiResponse(
@@ -84,13 +86,15 @@ public class FeedbackController {
             );
         }
     }
+
     @GetMapping(value = "active")
-    public ServiceResponse<?> getSlots(@RequestParam String userId) {
+    public ServiceResponse<?> getSlots(@RequestHeader String Authorization) {
         String logId = LoggerUtil.generateLogID();
+        String userId = "";
         long startTime = System.currentTimeMillis();
         try {
+            userId = firebase.getUserEmailFromAuth(Authorization);
             UserSlot res = calenderService.getUserSlots(userId);
-
             logger.logCommonApiResponse(
                     LoggingAction.Controller.TransactionController,
                     LoggingAction.Method.createRecord,
@@ -175,11 +179,12 @@ public class FeedbackController {
         String logId = LoggerUtil.generateLogID();
         long startTime = System.currentTimeMillis();
         try {
-            if(StringUtils.isBlank(Authorization)){
+            if (StringUtils.isBlank(Authorization)) {
                 throw new Exception("Empty Authorization");
             }
 
             String userEmail = firebase.getUserEmailFromAuth(Authorization);
+//            String userEmail = "shahrukhm319@gmail.com";
             System.out.println(userEmail);
             List<UserInterview> res = userInterviewService.getAllInterviewsByUserId(userEmail, history);
 
