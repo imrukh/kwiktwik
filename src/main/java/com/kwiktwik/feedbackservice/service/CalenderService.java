@@ -18,6 +18,7 @@ public class CalenderService {
         UserSlot userPreviousSlot = getUserSlots(slot.getUserId());
         if (StringUtils.isNotBlank(userPreviousSlot.getId())) {
             userPreviousSlot.setSlots(slot.getSlots());
+            calenderRepo.save(userPreviousSlot);
             return userPreviousSlot.getId();
         } else {
             calenderRepo.save(slot);
