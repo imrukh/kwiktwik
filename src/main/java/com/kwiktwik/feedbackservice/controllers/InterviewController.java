@@ -3,12 +3,9 @@ package com.kwiktwik.feedbackservice.controllers;
 import com.kwiktwik.feedbackservice.config.GoogleFirebase;
 import com.kwiktwik.feedbackservice.dto.FeedbackForm;
 import com.kwiktwik.feedbackservice.entity.Feedback;
-import com.kwiktwik.feedbackservice.entity.UserInterview;
-import com.kwiktwik.feedbackservice.entity.UserSlot;
 import com.kwiktwik.feedbackservice.response.AllFeedbackFormDTO;
 import com.kwiktwik.feedbackservice.response.BaseMessageResponse;
 import com.kwiktwik.feedbackservice.response.ServiceResponse;
-import com.kwiktwik.feedbackservice.service.CalenderService;
 import com.kwiktwik.feedbackservice.service.FeedbackFormService;
 import com.kwiktwik.feedbackservice.service.UserInterviewService;
 import com.kwiktwik.feedbackservice.util.Logger;
@@ -19,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,8 +23,8 @@ import static com.kwiktwik.feedbackservice.util.LoggingAction.Status.SUCCESS;
 
 //@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping(value = "/api/feedback")
-public class FeedbackController {
+@RequestMapping(value = "/api/interview")
+public class InterviewController {
 
     @Autowired
     private Logger logger;
@@ -106,9 +102,8 @@ public class FeedbackController {
         }
     }
 
-    @GetMapping(value = "/{id}")
-    public ServiceResponse<?> getFeedback(@RequestHeader String Authorization, @RequestParam(required = false) Integer stepId,
-                                          @PathVariable String id) {
+    @GetMapping(value = "/{id}/{stepId}")
+    public ServiceResponse<?> getFeedback(@RequestHeader String Authorization, @PathVariable Integer stepId, @PathVariable String id) {
         String logId = LoggerUtil.generateLogID();
         String userId = "";
         long startTime = System.currentTimeMillis();

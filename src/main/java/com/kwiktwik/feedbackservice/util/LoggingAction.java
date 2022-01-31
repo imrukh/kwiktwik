@@ -22,7 +22,7 @@ public class LoggingAction {
     }
 
     public enum Controller {
-        TransactionController,
+        SlotController,
         FeedbackController
     }
 

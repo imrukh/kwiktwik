@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 @Service
 public class CalenderService {
@@ -28,9 +27,6 @@ public class CalenderService {
 
     public UserSlot getUserSlots(String userId) throws Exception {
         ArrayList<UserSlot> res = calenderRepo.findByUserId(userId);
-//        for(UserSlot s: res){
-//            System.out.println(s.getSlots());
-//        }
         if(res==null || res.size()==0) return new UserSlot(userId);
         return res.get(res.size() - 1);
     }

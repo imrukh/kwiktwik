@@ -51,7 +51,8 @@ public class FeedbackFormService {
 
     public Object getFeedbackForCurrentStep(String id, String userId, Integer currentStep) throws Exception {
         Feedback form = getFromById(id, userId);
-        if (form == null) return null;
+        if (form == null || currentStep == null) return form;
+
         Object stepRes = null;
         switch (currentStep) {
             case 1:
