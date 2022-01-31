@@ -14,17 +14,16 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class FeedbackForm implements Serializable {
-    @JsonProperty(value="id")
-    private String id;
+public class FeedbackSteps implements Serializable {
+    @JsonProperty(value = "currentStep")
+    private Integer currentStep;
 
-    @JsonProperty(value = "interviewId")
-    private String interviewId;
+    @JsonProperty(value = "step1")
+    private FeedbackStep1 feedbackStep1;
 
-    @JsonProperty(value = "userId")
-    private String userId;
+    @JsonProperty(value = "step2")
+    private FeedbackStep2[] feedbackStep2;
 
-    @JsonProperty(value = "feedback")
-    private FeedbackSteps feedback;
+    @JsonProperty(value = "step3")
+    private FeedbackStep3[] feedbackStep3;
 }
-

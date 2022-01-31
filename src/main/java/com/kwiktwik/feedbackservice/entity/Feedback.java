@@ -3,6 +3,7 @@ package com.kwiktwik.feedbackservice.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kwiktwik.feedbackservice.dto.FeedbackSteps;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ import java.io.Serializable;
 public class Feedback implements Serializable {
     @Id
     private String id;
-    private String cmpId;
+    private String interviewId;
     private String userId;
-    private String feedback;
+    private FeedbackSteps feedback;
 }

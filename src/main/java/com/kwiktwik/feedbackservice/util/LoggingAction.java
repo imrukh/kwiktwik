@@ -15,13 +15,15 @@ public class LoggingAction {
 
     public enum Method {
         createRecord,
+        getFeedback,
         getTxn,
         getTxnByType,
         getSum
     }
 
     public enum Controller {
-        TransactionController
+        TransactionController,
+        FeedbackController
     }
 
     public enum WarnLevel {
