@@ -15,9 +15,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FeedbackStep3 implements Serializable {
-    @JsonProperty(value = "id")
-    private String id;
-
     @JsonProperty(value = "timeSpent")
     private String timeSpent;
 
