@@ -24,8 +24,3 @@ public class FeedbackStep3 implements Serializable {
     @JsonProperty(value = "answer")
     private String[] answer;
 }
-//{
-//        "timeSpent": "34",
-//        "question": "324234",
-//        "answer": ["32423423", "234234234"]
-//        },

@@ -70,6 +70,9 @@ public class FeedbackFormService {
             case 3:
                 stepRes = form.getFeedback().getFeedbackStep3();
                 break;
+            case 4:
+                stepRes = form.getFeedback().getFeedbackStep4();
+                break;
         }
         return stepRes;
     }
@@ -85,6 +88,9 @@ public class FeedbackFormService {
                 break;
             case 3:
                 formOld.setFeedbackStep3(formNew.getFeedbackStep3());
+                break;
+            case 4:
+                formOld.setFeedbackStep4(formNew.getFeedbackStep4());
                 break;
         }
     }
