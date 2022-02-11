@@ -18,23 +18,23 @@ public class FeedbackFormService {
     private FeedbackRepo feedbackRepo;
 
     public String addNewForm(FeedbackForm newForm) throws Exception {
-        Feedback feedbackForm = new Feedback();
-        if (StringUtils.isNotBlank(newForm.getId())) {
-            feedbackForm = getFromById(newForm.getId(), newForm.getUserId());
-            if (feedbackForm == null) {
-                return "-1";
-            }
+        Feedback feedbackForm;
+        if (StringUtils.isBlank(newForm.getInterviewId())) {
+            return "-1";
+        }
 
+        feedbackForm = getFromByInterviewId(newForm.getInterviewId(), newForm.getUserId());
+        if (StringUtils.isNotBlank(feedbackForm.getId())) {
             updateCurrentStep(newForm.getFeedback(), feedbackForm.getFeedback());
             feedbackRepo.save(feedbackForm);
-            return feedbackForm.getId();
+            return feedbackForm.getInterviewId();
         }
 
         feedbackForm.setInterviewId(newForm.getInterviewId());
         feedbackForm.setUserId(newForm.getUserId());
         feedbackForm.setFeedback(newForm.getFeedback());
         feedbackRepo.save(feedbackForm);
-        return feedbackForm.getId();
+        return feedbackForm.getInterviewId();
     }
 
     public Feedback getFromById(String id, String userId) throws Exception {
@@ -44,13 +44,19 @@ public class FeedbackFormService {
         return feedback;
     }
 
+    public Feedback getFromByInterviewId(String invId, String userId) throws Exception {
+        List<Feedback> res = feedbackRepo.findAllByInterviewId(invId);
+        if (res.size() > 0) return res.get(0);
+        return new Feedback();
+    }
+
     public List<Feedback> getAllFromById(String userId) throws Exception {
         List<Feedback> res = feedbackRepo.findAllByUserId(userId);
         return res;
     }
 
-    public Object getFeedbackForCurrentStep(String id, String userId, Integer currentStep) throws Exception {
-        Feedback form = getFromById(id, userId);
+    public Object getFeedbackForCurrentStep(String invId, String userId, Integer currentStep) throws Exception {
+        Feedback form = getFromByInterviewId(invId, userId);
         if (form == null || currentStep == null) return form;
 
         Object stepRes = null;

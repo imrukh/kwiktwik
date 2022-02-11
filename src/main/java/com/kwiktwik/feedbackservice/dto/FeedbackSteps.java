@@ -18,12 +18,12 @@ public class FeedbackSteps implements Serializable {
     @JsonProperty(value = "currentStep")
     private Integer currentStep;
 
-    @JsonProperty(value = "step1")
+    @JsonProperty(value = "1")
     private FeedbackStep1 feedbackStep1;
 
-    @JsonProperty(value = "step2")
+    @JsonProperty(value = "2")
     private FeedbackStep2[] feedbackStep2;
 
-    @JsonProperty(value = "step3")
+    @JsonProperty(value = "3")
     private FeedbackStep3[] feedbackStep3;
 }
