@@ -24,6 +24,9 @@ public class FeedbackStep1 implements Serializable {
     @JsonProperty(value = "techStack")
     private String techStack;
 
+    @JsonProperty(value = "projects")
+    private String[] projects;
+
     @JsonProperty(value = "comments")
     private String[] comments;
 }
