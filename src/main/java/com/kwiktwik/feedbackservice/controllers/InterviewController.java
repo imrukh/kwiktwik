@@ -22,6 +22,7 @@ import java.util.List;
 import static com.kwiktwik.feedbackservice.util.LoggingAction.Status.SUCCESS;
 
 //@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/interview")
 public class InterviewController {
